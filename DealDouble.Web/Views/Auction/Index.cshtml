@@ -1,0 +1,29 @@
+﻿@model List<DealDouble.Entities.Auction>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>ActualAmount</th>
+            <th>StartingTime</th>
+            <th>EndingTime</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            @foreach (var auction in Model)
+            {
+            <tr>
+                <td>@auction.Title</td>
+                <td>@auction.Description</td>
+                <td>@auction.ActualAmount</td>
+                <td>@auction.StartingTime</td>
+                <td>@auction.EndingTime</td>
+                <td><a href="Delete/@auction.ID">Delete</a></td>
+            </tr>
+            }
+        
+    </tbody>
+</table>
