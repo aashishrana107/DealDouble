@@ -1,29 +1,103 @@
 ﻿@model List<DealDouble.Entities.Auction>
 
+<div id="listingArea">
+    <table>
+        <thead>
+            <tr>
+                <th> Title </th>
+                <th> Description </th>
+                <th> ActualAmount </th>
+                <th> StartingTime </th>
+                <th> EndingTime </th>
+            </tr>
+        </thead>
+        <tbody>
 
-<table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>ActualAmount</th>
-            <th>StartingTime</th>
-            <th>EndingTime</th>
-        </tr>
-    </thead>
-    <tbody>
-        
             @foreach (var auction in Model)
             {
-            <tr>
-                <td>@auction.Title</td>
-                <td>@auction.Description</td>
-                <td>@auction.ActualAmount</td>
-                <td>@auction.StartingTime</td>
-                <td>@auction.EndingTime</td>
-                <td><a href="Delete/@auction.ID">Delete</a></td>
-            </tr>
+                <tr>
+                    <td>@auction.Title</td>
+                    <td>@auction.Description</td>
+                    <td>@auction.ActualAmount</td>
+                    <td>@auction.StartingTime</td>
+                    <td>@auction.EndingTime</td>
+                    <td><button class="editButton" data-id="@auction.ID">Edit</button>
+                    <button class="deleteButton" data-id="@auction.ID">Delete</button></td>
+                </tr>
             }
+
+        </tbody>
+    </table>
+
+    <div>
+        <button id="createButton">Create New Auction</button>
+    </div>
+
+
+
+    <div id="contentArea">
+
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(".deleteButton").click(function () {
+
+        var result = confirm("Are you sure want to delete this Auction");
+        if (result == true)
+        {
+            $.ajax({
+                url: "/Auction/Delete/",
+                method: "post",
+                data: {
+                    ID: $(this).attr("data-id")
+                }
+
+            })
+                .done(function (response) {
+                    debugger;
+                    $("#listingArea").html(response);
+                })
+                .fail(function () {
+
+                });
+        }
         
-    </tbody>
-</table>
+    });
+
+
+
+
+    $(".editButton").click(function () {
+        $.ajax({
+            url: "/Auction/Edit/",
+            method: "get",
+            data: {
+                ID: $(this).attr("data-id")
+            }
+            
+        })
+            .done(function (response) {
+                debugger;
+                $("#contentArea").html(response);
+            })
+    });
+
+    
+
+    $("#createButton").click(function () {
+        $.ajax({
+            url: "/Auction/Create/",
+            method: "get"
+        })
+            .done(function (response) {
+              
+                $("#contentArea").html(response);
+            });
+
+    });
+</script>
