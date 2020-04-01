@@ -1,5 +1,6 @@
 ﻿using DealDouble.Entities;
 using DealDouble.Services;
+using DealDouble.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +11,57 @@ namespace DealDouble.Web.Controllers
 {
     public class AuctionController : Controller
     {
+        AuctionsService auctionsService = new AuctionsService();
+
         public ActionResult Index()
         {
             AuctionsService auctionsService = new AuctionsService();
-            var Auction = auctionsService.GetAuction();
+            AuctionListingViewModel model = new AuctionListingViewModel();
+            model.PageTitle = "Auctions";
+            model.PageDescription = "Auction Listing Page";
+            model.Auctions = auctionsService.GetAuction();
             if(Request.IsAjaxRequest())
             {
-                return PartialView(Auction);
+                return PartialView(model);
             }
             else
             {
-                return View(Auction);
+                return View(model);
             }
             
         }
+        public ActionResult Listing()
+        {
+            AuctionListingViewModel model = new AuctionListingViewModel();
+            model.Auctions = auctionsService.GetAuction();
+            return PartialView(model);
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
             return PartialView();
         }
         [HttpPost]
-        public ActionResult Create(Auction auction)
+        public ActionResult Create(CreateAuctionViewModel model)
         {
             AuctionsService auctionsService = new AuctionsService();
+            Auction auction = new Auction();
+            auction.Title = model.Title;
+            auction.Description = model.Description;
+            auction.ActualAmount = model.ActualAmount;
+            auction.StartingTime = model.StartingTime;
+            auction.EndingTime = model.EndingTime;
+
+            var pictureIDs = model.AuctionPictures.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(ID=>int.Parse(ID)).ToList();
+            auction.AuctionPictures = new List<AuctionPicture>();
+            auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { PictureID = x }).ToList());
+            //foreach (var picID in pictureIDs)
+            //{
+            //    var auctionPicture = new AuctionPicture();
+            //    auctionPicture.PictureID = picID;
+            //    auction.AuctionPictures.Add(auctionPicture);
+            //}
             auctionsService.SaveAuction(auction);
             return RedirectToAction("Index");
         }
