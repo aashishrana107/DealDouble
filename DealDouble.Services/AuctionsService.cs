@@ -15,6 +15,11 @@ namespace DealDouble.Services
             DealDoubleContext context = new DealDoubleContext();
             return context.Auctions.ToList();
         }
+        public List<Auction> GetpromotedAuctions()
+        {
+            DealDoubleContext context = new DealDoubleContext();
+            return context.Auctions.Take(4).ToList();
+        }
         public Auction GetAuctionByID(int ID)
         {
             DealDoubleContext context = new DealDoubleContext();
