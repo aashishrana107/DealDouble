@@ -16,6 +16,11 @@ namespace DealDouble.Web.Controllers
             AuctionViewModels vmodel = new AuctionViewModels();
             vmodel.AllAuction = auctionsService.GetAuction();
             vmodel.PromotedAuction = auctionsService.GetpromotedAuctions();
+
+            
+            ViewBag.Title = "Home Page";
+            ViewBag.PublishedOn = DateTime.Now;
+            
             return View(vmodel);
         }
 
