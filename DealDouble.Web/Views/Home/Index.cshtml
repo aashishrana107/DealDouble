@@ -35,9 +35,10 @@
         <div class="row">
             @foreach (var auction in Model.PromotedAuction)
             {
+                var picURL = auction.AuctionPictures !=null && auction.AuctionPictures.Count>0 ? "/Content/images/"+auction.AuctionPictures.First().Picture.URL : "http://placehold.it/700x400" ; 
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                        <a href="#"><img class="card-img-top" src="@picURL" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a href="@Url.Action("Details","Auction",new { ID = auction.ID })">@auction.Title</a>

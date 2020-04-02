@@ -12,6 +12,7 @@ namespace DealDouble.Web.Controllers
     public class AuctionController : Controller
     {
         AuctionsService auctionsService = new AuctionsService();
+        CategoriesService categoriesService = new CategoriesService();
 
         public ActionResult Index()
         {
@@ -40,7 +41,9 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return PartialView();
+            CreateAuctionViewModel model = new CreateAuctionViewModel();
+            model.Categories = categoriesService.GetAllCategories();
+            return PartialView(model);
         }
         [HttpPost]
         public ActionResult Create(CreateAuctionViewModel model)
@@ -48,10 +51,12 @@ namespace DealDouble.Web.Controllers
             AuctionsService auctionsService = new AuctionsService();
             Auction auction = new Auction();
             auction.Title = model.Title;
+            auction.CategoryID = model.CategoryID;
             auction.Description = model.Description;
             auction.ActualAmount = model.ActualAmount;
             auction.StartingTime = model.StartingTime;
             auction.EndingTime = model.EndingTime;
+            
 
             var pictureIDs = model.AuctionPictures.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries).Select(ID=>int.Parse(ID)).ToList();
             auction.AuctionPictures = new List<AuctionPicture>();
@@ -96,9 +101,12 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Details(int ID)
         {
+            AuctionDetailViewModel model = new AuctionDetailViewModel();
             AuctionsService auctionsService = new AuctionsService();
-            var Auction = auctionsService.GetAuctionByID(ID);
-            return View(Auction);
+            model.Auction = auctionsService.GetAuctionByID(ID);
+            model.PageTitle = "Auction Details:";
+            model.PageDescription = model.Auction.Description.Substring(0,10);
+            return View(model);
         }
     }
 }
