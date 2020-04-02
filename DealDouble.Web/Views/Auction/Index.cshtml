@@ -26,7 +26,7 @@
                         <td>@auction.StartingTime</td>
                         <td>@auction.EndingTime</td>
                         <td>
-                            <button class="editButton btn btn-primary"  data-id="@auction.ID">Edit</button>
+                            <button class="editButton btn btn-primary" data-id="@auction.ID">Edit</button>
                             <button class="deleteButton btn btn-danger" data-id="@auction.ID">Delete</button>
                         </td>
                     </tr>
@@ -44,70 +44,92 @@
         <div id="contentArea">
 
         </div>
-    
+
+
+
+
+        <div id="imageTemplate" style="display:none">
+            <img class='image img-fluid' src="" />
+
+        </div>
 
 
 
 
 
 
+        <script>
+            $(".deleteButton").click(function () {
 
-<script>
-    $(".deleteButton").click(function () {
+                var result = confirm("Are you sure want to delete this Auction");
+                if (result == true) {
+                    $.ajax({
+                        url: "/Auction/Delete/",
+                        method: "post",
+                        data: {
+                            ID: $(this).attr("data-id")
+                        }
 
-        var result = confirm("Are you sure want to delete this Auction");
-        if (result == true)
-        {
-            $.ajax({
-                url: "/Auction/Delete/",
-                method: "post",
-                data: {
-                    ID: $(this).attr("data-id")
+                    })
+                        .done(function (response) {
+                            debugger;
+                            $("#listingArea").html(response);
+                        })
+                        .fail(function () {
+
+                        });
                 }
 
-            })
-                .done(function (response) {
-                    debugger;
-                    $("#listingArea").html(response);
-                })
-                .fail(function () {
-
-                });
-        }
-        
-    });
-
-
-
-
-    $(".editButton").click(function () {
-        $.ajax({
-            url: "/Auction/Edit/",
-            method: "get",
-            data: {
-                ID: $(this).attr("data-id")
-            }
-            
-        })
-            .done(function (response) {
-                debugger;
-                $("#contentArea").html(response);
-            })
-    });
-
-    
-
-    $("#createButton").click(function () {
-        $.ajax({
-            url: "/Auction/Create/",
-            method: "get"
-        })
-            .done(function (response) {
-              
-                $("#contentArea").html(response);
             });
 
-    });
-</script>
-        </div>
+
+
+
+            $(".editButton").click(function () {
+                $.ajax({
+                    url: "/Auction/Edit/",
+                    method: "get",
+                    data: {
+                        ID: $(this).attr("data-id")
+                    }
+
+                })
+                    .done(function (response) {
+                        debugger;
+                        $("#contentArea").html(response);
+                    })
+            });
+
+
+
+            $("#createButton").click(function () {
+                $.ajax({
+                    url: "/Auction/Create/",
+                    method: "get"
+                })
+                    .done(function (response) {
+
+                        $("#contentArea").html(response);
+                    });
+
+            });
+
+
+
+            function RemoveImagesOnClick() {
+                $("#picturesArea .image").click(function () {
+                    debugger;
+                    $(this).remove();
+                });
+            }
+
+
+        </script>
+    </div>
 </div>
+
+<div id="imageTemplate" style="display:none">
+    <img class='image img-fluid' src='' />
+
+</div>
+

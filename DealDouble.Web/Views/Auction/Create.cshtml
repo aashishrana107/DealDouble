@@ -25,11 +25,10 @@
     <div class="form-group">
         <label for="EndingTime1">Select Pictures</label>
         <input class="form-control" id="auctionPictures" type="file" name="AuctionPictures" multiple>
-    <div id="picturesArea"></div>
+        <div id="picturesArea"></div>
         <input type="hidden" name="AuctionPictures" id="picturesIDs" />
     </div>
-
-
+    
     <button class="btn btn-info" type="button" id="savebutton">Save</button>
 </form>
 
@@ -52,23 +51,54 @@
         })
             .done(function (responses) {
                 debugger;
-                var picIDs = '';
+               // var picIDs = '';
                 for (var i = 0; i < responses.length; i++)
                 {
                     var picResponse = responses[i];
-                    var imghtml = "<img class='img-fluid' src=/Content/images/" + picResponse.pictureURL+" />"
-                    $("#picturesArea").append(imghtml);
-                    picIDs = picIDs + "," + picResponse.ID;
+
+                    debugger;
+
+                    AttachNewImage(picResponse.pictureURL, picResponse.ID);
+
+                    //var imghtml = "<img class='img-fluid' src=/Content/images/" + picResponse.pictureURL + " />"
+                    
+
+                    //$("#picturesArea").append(imghtml);
+                   // picIDs = picIDs + "," + picResponse.ID;
                 }
-                $("#picturesIDs").val(picIDs);
+                //$("#picturesIDs").val(picIDs);
                 
             });
     });
+    function AttachNewImage(imageURL, imageID)
+    {
+        var $newimgHTML = $("#imageTemplate").clone();
+        $newimgHTML.find(".image").attr("src", "/content/images/" + imageURL);
+        $newimgHTML.find(".image").attr("data-id", imageID);
+        
+
+        $("#picturesArea").append($newimgHTML.html());
+        RemoveImagesOnClick();
+
+    }
+
+   
+
+
 
 
 
 
     $("#savebutton").click(function () {
+        debugger;
+        var imageIDs = [];
+        $("#picturesArea .image").each(function () {
+            var imageID = $(this).attr("data-id");
+            imageIDs.push(imageID);
+        });
+
+        $("#picturesIDs").val(imageIDs.join());
+
         $.ajax({
             url: "/Auction/Create/",
             method: "post",
