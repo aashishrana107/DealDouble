@@ -1,0 +1,61 @@
+﻿@model DealDouble.Web.ViewModels.CategoryListingViewModel
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Auctions
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var category in Model.Categories)
+        {
+        <tr>
+            <td>
+                @category.Name
+            </td>
+            <td>
+                @category.Description
+            </td>
+            <td>
+                @category.Auctions.Count()
+            </td>
+            <td>
+                <button class="editButton btn btn-primary" data-id="@category.ID" data-toggle="modal" data-target="#formModal">Edit</button>
+                <button class="editButton btn btn-danger" data-id="@category.ID" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(".editButton").click(function () {
+        $.ajax({
+            url: "@Url.Action("Edit","Category")",
+            method: "get",
+            data: {
+                ID: $(this).attr("data-id")
+            }
+        })
+            .done(function (response) {
+                $("#contentArea").html(response);
+                $("#formModal").modal("toggle");
+            });
+    });
+    $(".deleteButton").click(function () {
+        $("#deleteModal").modal('toggle');
+        $("#mDeleteButton").attr("data-recordID", $(this).attr("data-id"))
+    });
+
+</script>

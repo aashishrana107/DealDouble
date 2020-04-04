@@ -1,0 +1,246 @@
+﻿@model DealDouble.Web.ViewModels.AuctionListingViewModel
+
+
+<!---it is for the data table plugin-->
+@*<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>*@
+
+
+
+
+<div>
+    <form method="post">
+
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search Here" name="search" id="searchTxt" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
+            <div class="input-group-append" id="button-addon4">
+                <button id="searchBtn" type="button">Search</button>
+                <button id="resetBtn" type="button">Reset</button>
+                <button id="newBtn" type="button">New</button>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+<div>
+    <table id="productstable" class="table table-striped">
+        <thead>
+            <tr>
+                <th> Title </th>
+                <th>Category</th>
+                <th> Description </th>
+                <th> ActualAmount </th>
+                <th> StartingTime </th>
+                <th> EndingTime </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var auction in Model.Auctions)
+            {
+                <tr>
+                    <td>@auction.Title</td>
+                    <td>@auction.Category.Name</td>
+                    <td>@auction.Description</td>
+                    <td>@auction.ActualAmount</td>
+                    <td>@auction.StartingTime</td>
+                    <td>@auction.EndingTime</td>
+                    <td>
+                        <button class="editButton btn btn-primary" data-id="@auction.ID">Edit</button>
+                        <button class="deleteButton btn btn-danger" data-id="@auction.ID">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <div>
+        @if (Model.PageNo != 1)
+        {
+            <button class="pageButtons" data-pageNo="@(Model.PageNo - 1)">Previous</button>
+        }
+        <button class="pageButtons" data-pageNo="@(Model.PageNo + 1)">Next</button>
+    </div>
+</div>
+
+
+<script>
+
+
+
+
+
+
+
+
+
+    ////this use for tabledata
+    //$('#productstable').DataTable();
+
+
+
+    $(".pageButtons").click(function () {
+        debugger;
+        $.ajax({
+            url: '/Auction/Listing',
+            data: {
+                pageNo: $(this).attr('data-pageNo')
+            }
+        })
+            .done(function (response) {
+                $("#tableContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+
+
+    $("#searchBtn").click(function () {
+        var searchValue = $("#searchTxt").val();
+        $.ajax({
+            url: '/Auction/Listing',
+            data: {
+                search: searchValue
+            }
+        })
+            .done(function (response) {
+                $("#tableContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+
+    $("#resetBtn").click(function () {
+        var searchValue = '';
+        $.ajax({
+            url: '/Auction/Listing',
+            data: {
+                search: searchValue
+            }
+        })
+            .done(function (response) {
+                $("#tableContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+
+    $("#newBtn").click(function () {
+        $.ajax({
+            url: '/Auction/Create',
+        })
+            .done(function (response) {
+                $("#actionContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+
+
+    $(".editBtn").click(function () {
+
+        $.ajax({
+            url: '/Auction/Edit',
+            data: {
+                ID: $(this).attr('data-id')
+            }
+        })
+            .done(function (response) {
+                $("#actionContainer").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+    });
+
+
+    $(".deteteBtn").click(function () {
+
+        swal({
+            title: "Are you Sure want to Delete this Product?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Auction/Delete',
+                        data: {
+                            ID: $(this).attr('data-id')
+                        }
+                    })
+                        .done(function (response) {
+                            $("#tableContainer").html(response);
+                            swal("Poof! Product has been deleted!", {
+                                icon: "success",
+                            });
+                        })
+                        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                            alert("Fail");
+                        });
+                }
+                else {
+                    swal("Your imaginary file is safe!");
+                }
+            });
+
+        //var confirmDelete = confirm("Are you Sure want to Delete this Product");
+        //if (confirmDelete == true)
+        //{
+        //        $.ajax({
+        //            type: 'POST',
+        //            url: '/Product/Delete',
+        //            data: {
+        //                ID: $(this).attr('data-id')
+        //            }
+        //        })
+        //        .done(function (response) {
+        //            $("#tableContainer").html(response);
+        //        })
+        //        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        //            alert("Fail");
+        //        });
+        //}
+    });
+
+
+    var products = [];
+
+    $(".addtoCart").click(function () {
+
+        var productId = $(this).attr('data-id');
+
+        products.push(productId);
+
+        $.cookie('CardProducts', products.join('-'));                  //cockie me name or productid
+
+        alert("Product Add to Cart")
+    });
+
+
+</script>
+
+
+
+
+
+
+
+
+
+

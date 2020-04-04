@@ -1,29 +1,82 @@
-﻿@model DealDouble.Entities.Auction
+﻿@model DealDouble.Web.ViewModels.CreateAuctionViewModel
 
-<h2>Edit Auction</h2>
-<form id="editForm" method="post" action="Auction/Edit/">
-    <input name="ID" value="@Model.ID" type="hidden" />
-    <label>Title</label>
-    <input name="Title" value="@Model.Title" />
-    <br />
-    <label>Description</label>
-    <input name="Description" value="@Model.Description" />
-    <br />
-    <label>ActualAmount</label>
-    <input name="ActualAmount" value="@Model.ActualAmount" />
-    <br />
-    <label>StartingTime</label>
-    <input name="StartingTime" value="@Model.StartingTime" />
-    <br />
-    <label>EndingTime</label>
-    <input name="EndingTime" value="@Model.EndingTime" />
-    <br />
-    <button type="button" id="editbutton">Edit</button>
+<div class="modal-header">
+    <h3 class="modal-title">Edit Auction</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form id="editForm" method="post">
+    <div class="modal-body">
+        <input name="ID" value="@Model.ID" type="hidden" />
+        <div class="form-group">
+            <label>Title</label>
+            <input class="form-control" name="Title" value="@Model.Title" />
+        </div>
+        <div class="form-group">
+            <label for="Category1">Category</label>
+            <select class="form-control" name="CategoryID">
+                @foreach (var category in Model.Categories)
+                {
+                    var selected = category.ID == Model.CategoryID ? "selected" : string.Empty;
+                    <option value="@category.ID" @selected>@category.Name</option>
+                }
+
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input name="Description" class="form-control" value="@Model.Description" />
+        </div>
+        <div class="form-group">
+            <label>ActualAmount</label>
+            <input name="ActualAmount" class="form-control" value="@Model.ActualAmount" />
+        </div>
+        <div class="form-group">
+            <label>StartingTime</label>
+            <input name="StartingTime" class="form-control" value="@Model.StartingTime" />
+        </div>
+        <div class="form-group">
+            <label>EndingTime</label>
+            <input name="EndingTime" class="form-control" value="@Model.EndingTime" />
+        </div>
+        <div class="form-group">
+            <label for="EndingTime1">Select Pictures</label>
+            <input class="form-control" id="auctionPictures" type="file" name="AuctionPictures" multiple>
+            <div id="picturesArea" class="mt-2">
+                @if (Model.AuctionPicturesList != null && Model.AuctionPicturesList.Count > 0)
+                {
+                    foreach (var picture in Model.AuctionPicturesList)
+                    {
+                        <img class='image img-thumbnail' src="/Content/images/@picture.Picture.URL" data-id="@picture.ID" style="width:200px;height:200px;" />
+
+                    }
+                }
+            </div>
+            <input type="hidden" name="AuctionPictures" id="picturesIDs" />
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="editbutton">Edit</button>
+    </div>
 </form>
 
 
 <script>
+
+    RemoveImagesOnClick();
+
     $("#editbutton").click(function () {
+        var imageIDs = [];
+        $("#picturesArea .image").each(function () {
+            var imageID = $(this).attr("data-id");
+            imageIDs.push(imageID);
+        });
+
+        $("#picturesIDs").val(imageIDs.join());
+
         $.ajax({
             url: "/Auction/Edit",
             method: "post",
@@ -33,7 +86,48 @@
             .done(function (response) {
                 debugger;
                 $("#listingArea").html(response);
+                $('formModel').modal('toggle');
             });
-           
+
     });
+
+
+     $("#auctionPictures").change(function () {
+        debugger;
+        var pictures = this.files;
+        var picData = new FormData();
+        for (var i = 0; i < pictures.length; i++) {
+            picData.append("Picture", pictures[i]);
+        }
+
+        $.ajax({
+            url: "@Url.Action("UploadPicture", "Shared")",
+            type: "post",
+            data: picData,
+            datatype: "json",
+            processData: false,
+            contentType: false
+        })
+            .done(function (responses) {
+                debugger;
+               // var picIDs = '';
+                for (var i = 0; i < responses.length; i++)
+                {
+                    var picResponse = responses[i];
+
+                    debugger;
+
+                    AttachNewImage(picResponse.pictureURL, picResponse.ID);
+
+                    //var imghtml = "<img class='img-fluid' src=/Content/images/" + picResponse.pictureURL + " />"
+
+
+                    //$("#picturesArea").append(imghtml);
+                   // picIDs = picIDs + "," + picResponse.ID;
+                }
+                //$("#picturesIDs").val(picIDs);
+
+            });
+    });
+
 </script>

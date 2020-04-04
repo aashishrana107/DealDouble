@@ -1,0 +1,42 @@
+﻿@model DealDouble.Web.ViewModels.CreateCategoryViewModel
+
+<div class="modal-header">
+    <h3 class="modal-title">Edit Category</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form id="editForm" method="post">
+    <div class="modal-body">
+        <input type="hidden" name="ID" value="@Model.ID" />
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" name="name" value="@Model.Name">
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <input class="form-control" name="Description" value="=@Model.Description">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button class="btn btn-success" type="button" id="savebutton">Save</button>
+    </div>
+</form>
+
+<script>
+    $("#savebutton").click(function () {
+        $.ajax({
+            url: @Url.Action("Edit","Category"),
+            method: "post",
+            data: $("#editForm").serialize()
+
+        })
+            .done(function (response) {
+                debugger;
+                $("#listingArea").html(response);
+                $("#formModal").modal('toggle');
+            });
+    });
+</script>

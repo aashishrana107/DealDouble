@@ -9,5 +9,6 @@ namespace DealDouble.Web.ViewModels
     {
         public string PageTitle { get; set; }
         public string PageDescription { get; set; }
+       
     }
 }

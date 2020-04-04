@@ -65,6 +65,10 @@
     <Compile Include="Migrations\202004020549494_addedcategories.Designer.cs">
       <DependentUpon>202004020549494_addedcategories.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004040300132_auctionvalidations.cs" />
+    <Compile Include="Migrations\202004040300132_auctionvalidations.Designer.cs">
+      <DependentUpon>202004040300132_auctionvalidations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -90,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004020549494_addedcategories.resx">
       <DependentUpon>202004020549494_addedcategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004040300132_auctionvalidations.resx">
+      <DependentUpon>202004040300132_auctionvalidations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

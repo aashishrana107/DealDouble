@@ -4,6 +4,29 @@
 
     <div id="listingArea" class="col-lg-12">
         <h2>Auctions</h2>
+
+        <form method="post">
+            <div class="form-group">
+                <label for="Category1">Category</label>
+                <select class="form-control" name="CategoryID">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.ID">@category.Name</option>
+                    }
+
+                </select>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Here" name="search" id="searchTxt" aria-label="Recipient's username with two button addons" aria-describedby="button-addon4">
+                <div class="input-group-append" id="button-addon4">
+                    <button id="searchBtn" class="btn btn-primary" type="button">Search</button>
+
+
+                </div>
+            </div>
+
+        </form>
+
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -36,6 +59,23 @@
 
             </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="@Url.Action("Index","Auction", new { pageNo = Model.PageNo})">1</a></li>
+                <li class="page-item"><a class="page-link" href="@Url.Action("Index","Auction", new { pageNo = Model.PageNo})">2</a></li>
+                <li class="page-item"><a class="page-link" href="@Url.Action("Index","Auction", new { pageNo = Model.PageNo})">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index","Auction", new { pageNo = Model.PageNo+1})">Next</a>
+                </li>
+            </ul>
+        </nav>
+
+
+
+
 
         <div>
             <button class="btn btn-success" id="createButton">Create New Auction</button>
@@ -51,11 +91,12 @@
 
 
         <div id="imageTemplate" style="display:none">
-            <img class='image img-fluid' src="" />
+            <img class='image img-thumbnail' src="" style="width:200px;height:200px;" />
 
         </div>
 
 
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
 
 
 
@@ -117,6 +158,22 @@
             });
 
 
+            function AttachNewImage(imageURL, imageID) {
+                var $newimgHTML = $("#imageTemplate").clone();
+                $newimgHTML.find(".image").attr("src", "/content/images/" + imageURL);
+                $newimgHTML.find(".image").attr("data-id", imageID);
+
+
+                $("#picturesArea").append($newimgHTML.html());
+                RemoveImagesOnClick();
+
+            }
+
+
+
+
+
+
 
             function RemoveImagesOnClick() {
                 $("#picturesArea .image").click(function () {
@@ -125,10 +182,41 @@
                 });
             }
 
+            function ReloadListing() {
+                $.ajax({
+                    url: "/Auction/Index/",
+                    method: "get"
+                })
+                    .done(function (response) {
+
+                        $("#listingArea").html(response);
+                    });
+            }
+
+
+
+
+
 
         </script>
     </div>
 </div>
+
+
+@*this is under trail*@
+@*<div id="tableContainer">
+    @{
+        Html.RenderAction("Listing");
+
+        //Html.RenderAction("Create");
+    }
+</div>
+<hr />
+
+<div id="actionContainer">
+
+
+</div>*@
 
 <div id="imageTemplate" style="display:none">
     <img class='image img-fluid' src='' />

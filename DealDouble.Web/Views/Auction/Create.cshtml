@@ -5,7 +5,7 @@
 
     <div class="form-group">
         <label for="Title1">Title</label>
-        <input class="form-control" id="Title1" name="Title" placeholder="Enter Title">
+        <input class="form-control" id="Title1" name="Title" value="@Model.Title" placeholder="Enter Title">
     </div>
     <div class="form-group">
         <label for="Category1">Category</label>
@@ -19,29 +19,33 @@
     </div>
     <div class="form-group">
         <label for="Description1">Description</label>
-        <input class="form-control" id="Description1" name="Description" placeholder="Enter Description">
+        <input class="form-control" id="Description1" name="Description" value="@Model.Description" placeholder="Enter Description">
     </div>
     <div class="form-group">
         <label for="ActualAmount1">Actual Amount</label>
-        <input class="form-control" id="ActualAmount1" name="ActualAmount" placeholder="Actual Amount">
+        <input class="form-control" id="ActualAmount1" name="ActualAmount" value="@Model.ActualAmount" placeholder="Actual Amount">
     </div>
     <div class="form-group">
         <label for="StartingTime1">Starting Time</label>
-        <input class="form-control" id="StartingTime1" name="StartingTime" placeholder="Starting Time">
+        <input class="form-control" id="StartingTime1" name="StartingTime" value="@Model.StartingTime" placeholder="Starting Time">
     </div>
     <div class="form-group">
         <label for="EndingTime1">Ending Time</label>
-        <input class="form-control" id="EndingTime1" name="EndingTime" placeholder="Ending Time">
+        <input class="form-control" id="EndingTime1" name="EndingTime" value="@Model.EndingTime" placeholder="Ending Time">
     </div>
     <div class="form-group">
         <label for="EndingTime1">Select Pictures</label>
         <input class="form-control" id="auctionPictures" type="file" name="AuctionPictures" multiple>
-        <div id="picturesArea"></div>
+        <div id="picturesArea" class="mt-2"></div>
         <input type="hidden" name="AuctionPictures" id="picturesIDs" />
+    </div>
+    <div id="formErrors" class="form-group bg-danger" style="display:none">
+        
     </div>
 
     <button class="btn btn-info" type="button" id="savebutton">Save</button>
 </form>
+
 
 <script>
     $("#auctionPictures").change(function () {
@@ -81,6 +85,7 @@
                 
             });
     });
+    //this method is copy if edit or create functially proper work remove this code
     function AttachNewImage(imageURL, imageID)
     {
         var $newimgHTML = $("#imageTemplate").clone();
@@ -98,30 +103,57 @@
 
 
 
-
+    $("#createForm").validate({
+        rules: {
+            Title: {
+                required: true,
+                minlength: 10,
+                maxlength:150
+            }
+        },
+        messages: {
+            Title: {
+                required: "Title is required.",
+                minlength: "Mimimum Length is 10",
+                maxlength: "Maximum Length is 150",
+            }
+        }
+    });
 
     $("#savebutton").click(function () {
         debugger;
-        var imageIDs = [];
-        $("#picturesArea .image").each(function () {
-            var imageID = $(this).attr("data-id");
-            imageIDs.push(imageID);
-        });
+        if ($("#createForm").valid()) {
 
-        $("#picturesIDs").val(imageIDs.join());
-
-        $.ajax({
-            url: "/Auction/Create/",
-            method: "post",
-            data: $("#createForm").serialize()
-
-        })
-            .done(function (response) {
-                debugger;
-                $("#listingArea").html(response);
-            })
-            .fail(function () {
-
+            var imageIDs = [];
+            $("#picturesArea .image").each(function () {
+                var imageID = $(this).attr("data-id");
+                imageIDs.push(imageID);
             });
+
+            $("#picturesIDs").val(imageIDs.join());
+
+            $.ajax({
+                url: "/Auction/Create/",
+                method: "post",
+                data: $("#createForm").serialize()
+
+            })
+                .done(function (response) {
+                    debugger;
+                    if (response.Success) {
+                        ReloadListing();
+
+                        //$("#listingArea").html(response);
+                    }
+                    else {
+                        $("#formErrors").html(response.Error);
+                        $("#formErrors").show();
+                    }
+                })
+                .fail(function () {
+
+                });
+
+        }
     });
 </script>
