@@ -1,4 +1,5 @@
 ﻿using DealDouble.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DealDouble.Data
 {
-    public class DealDoubleContext : DbContext
+    public class DealDoubleContext : IdentityDbContext<DealDoubleUser>
     {
         public DealDoubleContext() : base("DealDoubleConnectionString")
         {
@@ -18,6 +19,12 @@ namespace DealDouble.Data
         public DbSet<Auction> Auctions { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<AuctionPicture> AuctionPictures { get; set; }
+
+
+        public static DealDoubleContext Create()
+        {
+            return new DealDoubleContext();
+        }
     }
 
 }
