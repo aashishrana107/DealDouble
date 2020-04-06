@@ -74,31 +74,69 @@
             <div class="card-header">
                 Comments
             </div>
-            <div class="card-body">
-                @if (Model.Comments != null && Model.Comments.Count > 0)
-                {
-                    foreach (var comment in Model.Comments)
-                    {
-                        <p>@comment.Text</p>
-                        <small class="text-muted">Posted by @comment.UserID on @comment.TimeStamp</small>
-                        <hr/>
-                    }
-                }
-                else
-                {
-                    <p>There is no comment </p>
-                    <hr />
-                }
 
-                
-                <hr>
+            @if (Model.Comments != null && Model.Comments.Count > 0)
+            {
+                foreach (var comment in Model.Comments)
+                {
+                var defaultStar = 5 - comment.Rating;
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
+                                <p class="text-secondary text-center">@comment.TimeStamp</p>
+                            </div>
+                            <div class="col-md-10">
+                                <p>
+                                    <a class="float-left" href="#"><strong>@comment.UserID</strong></a>
+                                    
+                                    
+                                    <span class="text-warning float-right">
+                                        @for (int i = 0; i < comment.Rating; i++)
+                                        {
+                                            <i class="ratingStar fas fa-star"></i>
+                                        }
+                                        
+                                        @for (int i = 0; i < defaultStar; i++)
+                                        {
+                                            <i class="ratingStar far fa-star"></i>
+                                        }
 
+                                    </span>
+
+
+                                </p>
+                                <div class="clearfix"></div>
+                                <p>@comment.Text</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                }
+            }
+            else
+            {
+                < p >< b > There is no comment </ b > </ p >
+                < hr />
+            }
+            <hr />
                 <form id="CommentForm">
                     <input type="hidden" name="EntityID" value="@Model.EntityID" />
                     <input type="hidden" name="RecordID" value="@Model.Auction.ID" />
 
                     <div class="form-group">
-                        <label>Write Your Comment</label>
+                        <label><b>Write Your Comment</b></label>
+                        <span class="text-warning float-right">
+                            <i class="ratingStar fas fa-star" data-value="1"></i>
+                            <i class="ratingStar far fa-star" data-value="2"></i>
+                            <i class="ratingStar far fa-star" data-value="3"></i>
+                            <i class="ratingStar far fa-star" data-value="4"></i>
+                            <i class="ratingStar far fa-star" data-value="5"></i>
+                        </span>
+                        <input name="Rating" type="hidden" id="ratingsValue" value="1" />
+
                         <textarea placeholder="Write Your Comment Here" class="form-control" name="Text" rows="3"></textarea>
                     </div>
                     <button type="button" id="btnComment" class="btn btn-success">Leave a Review</button>
@@ -111,11 +149,24 @@
     </div>
     <!-- /.col-lg-9 -->
 
-</div>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
+    $(".ratingStar").click(function () {
+        $(".ratingStar").addClass("far").removeClass("fas");
+
+        $(this).addClass("fas").removeClass("far");
+        $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+    });
+
+    $(".ratingStar").click(function () {
+        debugger;
+        var starValue = $(this).attr("data-value");
+        $("#ratingsValue").val(starValue);
+    });
+
+
     $("#btnBidNow").click(function () {
         debugger;
         $.ajax({

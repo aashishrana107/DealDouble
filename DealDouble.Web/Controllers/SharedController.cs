@@ -50,6 +50,7 @@ namespace DealDouble.Web.Controllers
                 
                 var comment = new Comment();
                 comment.Text = model.Text;
+                comment.Rating = model.Rating;
                 comment.EntityID = model.EntityID;
                 comment.RecordID = model.RecordID;
                 comment.UserID = User.Identity.GetUserId();

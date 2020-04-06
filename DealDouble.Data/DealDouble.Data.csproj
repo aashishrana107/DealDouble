@@ -95,6 +95,10 @@
     <Compile Include="Migrations\202004060434510_comment-useriD-int-to-string.Designer.cs">
       <DependentUpon>202004060434510_comment-useriD-int-to-string.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004060638208_comment-Add-Rating.cs" />
+    <Compile Include="Migrations\202004060638208_comment-Add-Rating.Designer.cs">
+      <DependentUpon>202004060638208_comment-Add-Rating.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -138,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004060434510_comment-useriD-int-to-string.resx">
       <DependentUpon>202004060434510_comment-useriD-int-to-string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004060638208_comment-Add-Rating.resx">
+      <DependentUpon>202004060638208_comment-Add-Rating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
