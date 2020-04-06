@@ -79,6 +79,18 @@
     <Compile Include="Migrations\202004050534286_updatedstuff.Designer.cs">
       <DependentUpon>202004050534286_updatedstuff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004050627094_BidEntity.cs" />
+    <Compile Include="Migrations\202004050627094_BidEntity.Designer.cs">
+      <DependentUpon>202004050627094_BidEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004060302264_bid-Entity-Amount.cs" />
+    <Compile Include="Migrations\202004060302264_bid-Entity-Amount.Designer.cs">
+      <DependentUpon>202004060302264_bid-Entity-Amount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004060411044_AddComment.cs" />
+    <Compile Include="Migrations\202004060411044_AddComment.Designer.cs">
+      <DependentUpon>202004060411044_AddComment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,6 +122,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004050534286_updatedstuff.resx">
       <DependentUpon>202004050534286_updatedstuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004050627094_BidEntity.resx">
+      <DependentUpon>202004050627094_BidEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004060302264_bid-Entity-Amount.resx">
+      <DependentUpon>202004060302264_bid-Entity-Amount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004060411044_AddComment.resx">
+      <DependentUpon>202004060411044_AddComment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

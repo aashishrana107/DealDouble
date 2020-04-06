@@ -13,6 +13,8 @@ namespace DealDouble.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            
+
             routes.MapRoute(
                name: "AuctionDetails",
                url: "Auction-details/{id}",

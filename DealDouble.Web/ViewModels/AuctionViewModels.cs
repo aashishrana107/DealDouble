@@ -27,6 +27,8 @@ namespace DealDouble.Web.ViewModels
     public class AuctionDetailViewModel : PageViewModel
     {
         public Auction Auction { get; set; }
+        public decimal BidsAmount { get; set; }
+        public DealDoubleUser LatestBidder { get; set; }
     }
     public class CreateAuctionViewModel : PageViewModel
     {

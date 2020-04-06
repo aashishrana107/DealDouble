@@ -153,9 +153,14 @@ namespace DealDouble.Web.Controllers
         {
             AuctionDetailViewModel model = new AuctionDetailViewModel();
             AuctionsService auctionsService = new AuctionsService();
+            
             model.Auction = auctionsService.GetAuctionByID(ID);
             model.PageTitle = "Auction Details:";
             model.PageDescription = model.Auction.Description.Substring(0,10);
+            model.BidsAmount = model.Auction.ActualAmount + model.Auction.Bids.Sum(x => x.BidAmount);
+
+            var latestBidder = model.Auction.Bids.OrderByDescending(x => x.Timestamp).FirstOrDefault();
+            model.LatestBidder = latestBidder != null ? latestBidder.User : null;
             return View(model);
         }
     }
