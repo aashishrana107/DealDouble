@@ -72,19 +72,38 @@
 
         <div class="card card-outline-secondary my-4">
             <div class="card-header">
-                Product Reviews
+                Comments
             </div>
             <div class="card-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                @if (Model.Comments != null && Model.Comments.Count > 0)
+                {
+                    foreach (var comment in Model.Comments)
+                    {
+                        <p>@comment.Text</p>
+                        <small class="text-muted">Posted by @comment.UserID on @comment.TimeStamp</small>
+                        <hr/>
+                    }
+                }
+                else
+                {
+                    <p>There is no comment </p>
+                    <hr />
+                }
+
+                
                 <hr>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                <hr>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                <hr>
-                <a href="#" class="btn btn-success">Leave a Review</a>
+
+                <form id="CommentForm">
+                    <input type="hidden" name="EntityID" value="@Model.EntityID" />
+                    <input type="hidden" name="RecordID" value="@Model.Auction.ID" />
+
+                    <div class="form-group">
+                        <label>Write Your Comment</label>
+                        <textarea placeholder="Write Your Comment Here" class="form-control" name="Text" rows="3"></textarea>
+                    </div>
+                    <button type="button" id="btnComment" class="btn btn-success">Leave a Review</button>
+                </form>
+
             </div>
         </div>
         <!-- /.card -->
@@ -120,6 +139,25 @@
     });
 
 
+    $("#btnComment").click(function () {
+        debugger;
+        $.ajax({
+            url: "@Url.Action("LeaveComment", "Shared")",
+            type: "post",
+            data: $('#CommentForm').serialize()
+        }).done(function (response) {
+            debugger
+                if (response.Success)
+                {
+                    window.location.reload();
+                }
+                else {
+                    swal("Error !", response.Message, "error");
+                }
+            }).fail(function () {
+                swal("Error !", "Error Occured . Please Try Again later", "error");
+            });
+    });
 
     
 </script>

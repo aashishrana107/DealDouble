@@ -91,6 +91,10 @@
     <Compile Include="Migrations\202004060411044_AddComment.Designer.cs">
       <DependentUpon>202004060411044_AddComment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004060434510_comment-useriD-int-to-string.cs" />
+    <Compile Include="Migrations\202004060434510_comment-useriD-int-to-string.Designer.cs">
+      <DependentUpon>202004060434510_comment-useriD-int-to-string.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -131,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004060411044_AddComment.resx">
       <DependentUpon>202004060411044_AddComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004060434510_comment-useriD-int-to-string.resx">
+      <DependentUpon>202004060434510_comment-useriD-int-to-string.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

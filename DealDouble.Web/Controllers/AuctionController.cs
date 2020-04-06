@@ -14,6 +14,7 @@ namespace DealDouble.Web.Controllers
     {
         AuctionsService auctionsService = new AuctionsService();
         CategoriesService categoriesService = new CategoriesService();
+        SharedService SharedService = new SharedService();
 
         public ActionResult Index()
         {
@@ -153,6 +154,7 @@ namespace DealDouble.Web.Controllers
         {
             AuctionDetailViewModel model = new AuctionDetailViewModel();
             AuctionsService auctionsService = new AuctionsService();
+            model.EntityID = (int)EntityEnums.Auction;
             
             model.Auction = auctionsService.GetAuctionByID(ID);
             model.PageTitle = "Auction Details:";
@@ -161,6 +163,7 @@ namespace DealDouble.Web.Controllers
 
             var latestBidder = model.Auction.Bids.OrderByDescending(x => x.Timestamp).FirstOrDefault();
             model.LatestBidder = latestBidder != null ? latestBidder.User : null;
+            model.Comments = SharedService.GetComments((int)EntityEnums.Auction, model.Auction.ID);
             return View(model);
         }
     }

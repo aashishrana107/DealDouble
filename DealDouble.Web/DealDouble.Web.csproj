@@ -183,6 +183,7 @@
     <Compile Include="ViewModels\AuctionViewModels.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
+    <Compile Include="ViewModels\SharedViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\shop-homepage.css" />

@@ -13,7 +13,7 @@ namespace DealDouble.Entities
         [MinLength(10)]
         [MaxLength(150)]
         public string Text { get; set; }
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public DateTime TimeStamp { get; set; }
         public int EntityID { get; set; }
         public int RecordID { get; set; }
