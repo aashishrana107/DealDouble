@@ -79,41 +79,41 @@
             {
                 foreach (var comment in Model.Comments)
                 {
-                var defaultStar = 5 - comment.Rating;
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
-                                <p class="text-secondary text-center">@comment.TimeStamp</p>
+                    var defaultStar = 5 - comment.Rating;
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
+                                    <p class="text-secondary text-center">@comment.TimeStamp</p>
+                                </div>
+                                <div class="col-md-10">
+                                    <p>
+                                        <a class="float-left" href="#"><strong>@comment.UserID</strong></a>
+
+
+                                        <span class="text-warning float-right">
+                                            @for (int i = 0; i < comment.Rating; i++)
+                                            {
+                                                <i class="ratingStar fas fa-star"></i>
+                                            }
+
+                                            @for (int i = 0; i < defaultStar; i++)
+                                            {
+                                                <i class="ratingStar far fa-star"></i>
+                                            }
+
+                                        </span>
+
+
+                                    </p>
+                                    <div class="clearfix"></div>
+                                    <p>@comment.Text</p>
+                                </div>
                             </div>
-                            <div class="col-md-10">
-                                <p>
-                                    <a class="float-left" href="#"><strong>@comment.UserID</strong></a>
-                                    
-                                    
-                                    <span class="text-warning float-right">
-                                        @for (int i = 0; i < comment.Rating; i++)
-                                        {
-                                            <i class="ratingStar fas fa-star"></i>
-                                        }
-                                        
-                                        @for (int i = 0; i < defaultStar; i++)
-                                        {
-                                            <i class="ratingStar far fa-star"></i>
-                                        }
 
-                                    </span>
-
-
-                                </p>
-                                <div class="clearfix"></div>
-                                <p>@comment.Text</p>
-                            </div>
                         </div>
-
                     </div>
-                </div>
                 }
             }
             else
@@ -122,6 +122,8 @@
                 < hr />
             }
             <hr />
+            @if (User.Identity.IsAuthenticated)
+            {
                 <form id="CommentForm">
                     <input type="hidden" name="EntityID" value="@Model.EntityID" />
                     <input type="hidden" name="RecordID" value="@Model.Auction.ID" />
@@ -142,7 +144,12 @@
                     <button type="button" id="btnComment" class="btn btn-success">Leave a Review</button>
                 </form>
 
-            </div>
+            }
+            else
+            {
+                < p >< b > You Need to login to leave Comments </ b > </ p >
+            }
+        </div>
         </div>
         <!-- /.card -->
 

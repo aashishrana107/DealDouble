@@ -13,7 +13,7 @@ namespace DealDouble.Data
     {
         public DealDoubleContext() : base("DealDoubleConnectionString")
         {
-
+            Database.SetInitializer<DealDoubleContext>(new DealDoubleDBInitialzer());
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Auction> Auctions { get; set; }
@@ -27,6 +27,16 @@ namespace DealDouble.Data
         {
             return new DealDoubleContext();
         }
+
+
+
+
+
+        //strategy
+
+        //Createdatabase if they are not exist     //default entity use this 
+        //dropcreate database if model changes  //is se har bar migration nai karna haga
+        //dropcreatedatabaseAlways
     }
 
 }
