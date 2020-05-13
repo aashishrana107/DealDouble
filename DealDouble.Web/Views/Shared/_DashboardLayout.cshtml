@@ -1,0 +1,139 @@
+﻿
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/055389d85a.js" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="/Content/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading"><i class="fas fa-wrench"></i> <b> Deal Double Control Panel </b></div>
+            <div class="list-group list-group-flush">
+                <a href="@Url.Action("Index","Dashboard")" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="@Url.Action("User","Dashboard")" class="list-group-item list-group-item-action bg-light">Profile</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("Administrator") || User.IsInRole("Users"))
+                    {
+                        <a href="@Url.Action("Index", "Category")" class="list-group-item list-group-item-action bg-light">Category</a>
+                        <a href="@Url.Action("Index", "Auction")" class="list-group-item list-group-item-action bg-light">Auction</a>
+                    }
+                }
+
+                <a href="@Url.Action("Payment","Dashboard")" class="list-group-item list-group-item-action bg-light">Payment</a>
+                <a href="@Url.Action("Status","Dashboard")" class="list-group-item list-group-item-action bg-light">Status</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("Administrator"))
+                    {
+                        <a href="@Url.Action("Deatils", "FAQ")" class="list-group-item list-group-item-action bg-light">Feedback</a>
+
+                    }
+                }
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index","Home")">Home</a>
+                        </li>
+
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("User1","Dashboard")">User</a>
+                            </li>
+                        }
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Profile","Dashboard")">@User.Identity.Name</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="btnlogoffForm">LogOut</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+
+    <form id="logoffForm" method="post" action="@Url.Action("LogOff", "Account")">
+        @Html.AntiForgeryToken()
+    </form>
+    <script>
+        debugger;
+        $("#btnlogoffForm").click(function () {
+            $("#logoffForm").submit();
+        });
+
+
+
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+</body>
+
+
+
+</html>
+
+

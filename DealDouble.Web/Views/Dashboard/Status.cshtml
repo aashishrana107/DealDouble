@@ -1,0 +1,131 @@
+﻿@model IEnumerable<DealDouble.Web.ViewModels.BidStatusViewModel>
+
+
+@{
+    ViewBag.Title = "Status";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Status</h2>
+
+    
+
+@*<h4>
+    
+    @Model.Bids
+    @Model.Bid
+    @Model.Title
+    @Model.BidAmount1
+    @Model.BidAmount
+</h4>*@
+
+
+
+@*@if (Model.LatestBidder != null)
+{
+    <text>
+        [@Model.LatestBidder.UserName]
+    </text>
+}
+    *@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Your Bid Amount</th>
+            <th>Current Bid Amount</th>
+            <th>Ending Time</th>
+            <th>Current Auction Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.BidAmount1
+                </td>
+                <td>
+                    @item.BidAmount
+                </td>
+                <td>
+                    <p id="demo11"></p>
+                </td>
+                <td>
+                    <p id="demo1">Running</p>
+                </td>
+                <td>
+                    <a href="@Url.Action("Details","Auction", new { id=item.BidID})" class="btn btn-success" id="btnBidNow"> Bid Now</a>
+                    <a href="@Url.Action("Report","Dashboard", new { title = item.Title, bid = item.BidAmount},null)" class="btn btn-success" id="btnBidNow"> Check Out</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>
+@*
+<script>
+
+    var userDate1 = @Model.EndingTime.Hour+":"+@Model.EndingTime.Minute+":"+@Model.EndingTime.Second; //MM-dd-YYYY || Mz
+
+
+
+    var userDate = @Model.EndingTime.Month+"-" +@Model.EndingTime.Day+"-" +@Model.EndingTime.Year;
+    var date = new Date(userDate),
+        yr = date.getFullYear(),
+        month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+        day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
+        newDate = (yr + '-' + (parseInt(month) + 1) + '-' + day) + " " + userDate1; //YYYY-MM-dd TIME || Mz
+    // Set the date we're counting down to
+    //var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+    var countDownDate = new Date(newDate).getTime();
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+       // debugger;
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("demo11").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo1").innerHTML = "EXPIRED";
+            const button = document.getElementById('btnBidNow');
+            button.disabled = true;
+            button.className = "btn btn-danger";
+            if (@Model.BidAmount1 == @Model.BidAmount) {
+                document.getElementById("demo1").innerHTML = "Win";
+            }
+            else {
+                document.getElementById("demo1").innerHTML = "Lose";
+            }
+
+
+
+        }
+        else {
+            document.getElementById("demo1").innerHTML = "Lose This Auction ";
+
+
+        }
+    }, 1000);
+
+
+
+</script>*@

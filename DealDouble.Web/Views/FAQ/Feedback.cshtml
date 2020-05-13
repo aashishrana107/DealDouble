@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <br />
+        <center><h2>Complaints Or Suggestions</h2></center>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-md-12 row" style="padding:0px;margin-bottom:10px;">
+
+                        <div class="col-md-2">
+                            <img src="http://dinus.org/img/fakultas/FIK/cs/cs.svg">
+                            <div style="margin-left:30px;">
+                                <img src="http://dinus.org/img/fakultas/FIK/cs/cs.png" width="70px" height="70px" class="img-circle" style="border:3px solid #052C52;">
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <hr>
+                            <p style="padding-left:55px;font-size:1.3em;"><strong>Admin</strong></p>
+
+                        </div>
+
+
+                    </div>
+                    <form id="createForm" method="post">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <input type="email" class="form-control" name=Email id="mailtip2" placeholder="Your e-mail">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="form-control" name=Subject type="text" placeholder="Subject">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <textarea class="form-control" name="Message" rows="4" placeholder="Message text . . ."></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" style="width: 100%;"><i class="fa fa-envelope-o" style="padding-right: 5px;"></i> Send</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#savebutton").click(function () {
+        debugger;
+        $.ajax({
+            url: "@Url.Action("Feedback","FAQ")",
+            method: "post",
+            data: $("#createForm").serialize()
+
+        })
+            .done(function (response) {
+                debugger;
+                $("#contentArea").html(response);
+            });
+    });
+</script>

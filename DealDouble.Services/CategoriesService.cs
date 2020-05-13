@@ -10,6 +10,11 @@ namespace DealDouble.Services
 {
     public class CategoriesService
     {
+        public int GetAllNumberCategories()
+        {
+            DealDoubleContext context = new DealDoubleContext();
+            return context.Categories.Count();
+        }
         public List<Category> GetAllCategories()
         {
             DealDoubleContext context = new DealDoubleContext();
@@ -38,5 +43,6 @@ namespace DealDouble.Services
             context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
             context.SaveChanges();
         }
+       
     }
 }

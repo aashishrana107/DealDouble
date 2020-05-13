@@ -18,11 +18,11 @@
     <link href="/Content/css/shop-homepage.css" rel="stylesheet">
 
     <script src="/Content/vendor/jquery/jquery.min.js"></script>
-
+    
 </head>
 
 <body>
-   @{Html.RenderPartial("_TopMenu");}
+    @{Html.RenderPartial("_TopMenu");}
 
 
     <div class="container">
@@ -42,7 +42,15 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    
+
     <script src="/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
+<script>
+    $("#btnlogoffForm").click(function () {
+        $("#logoffForm").submit();
+    });
+</script>

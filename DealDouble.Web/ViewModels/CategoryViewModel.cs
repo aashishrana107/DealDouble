@@ -29,4 +29,13 @@ namespace DealDouble.Web.ViewModels
         public string Description { get; set; }
         public List<Auction> Auctions { get; set; }
     }
+    public class FeedbackViewModel : PageViewModel
+    {
+        public int ID { get; set; }
+        public string Email { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        
+        public List<Feedback> feedback { get; set; }
+    }
 }

@@ -1,5 +1,8 @@
 ﻿@model DealDouble.Web.ViewModels.AuctionDetailViewModel
 
+
+@*for refreshing the page*@
+<meta http-equiv="refresh" content="100">
 <div class="row">
 
     <div class="col-lg-12">
@@ -29,7 +32,7 @@
 
                             var picURL = "/Content/images/" + picture.Picture.URL;
                             <div class="carousel-item @active">
-                                <img class="d-block img-fluid" src="@picURL">
+                                <img class="d-block img-fluid rounded mx-auto d-block" src="@picURL">
                             </div>
                         }
                     </div>
@@ -46,13 +49,16 @@
             }
             <div class="card-body">
                 <h3 class="card-title">@Model.Auction.Title</h3>
+                <h2 class="float-right" id="demo11"></h2>
+                <br />
+                <p class="float-right">End Bids Time @Model.Auction.EndingTime</p>
                 <h4>
                     $@Model.BidsAmount
-                    @if(Model.LatestBidder != null)
+                    @if (Model.LatestBidder != null)
                     {
-                       <text>
-                        [@Model.LatestBidder.UserName] 
-                       </text>
+                        <text>
+                            [@Model.LatestBidder.UserName]
+                        </text>
                     }
 
                 </h4>
@@ -62,7 +68,7 @@
             </div>
             <div class="card-footer text-muted">
                 <button type="button" class="btn btn-success" id="btnBidNow"> Bid Now</button>
-              
+                <div class="float-right" id="countdown"></div>
             </div>
         </div>
 
@@ -150,11 +156,11 @@
                 < p >< b > You Need to login to leave Comments </ b > </ p >
             }
         </div>
-        </div>
-        <!-- /.card -->
-
     </div>
-    <!-- /.col-lg-9 -->
+    <!-- /.card -->
+
+</div>
+<!-- /.col-lg-9 -->
 
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -217,5 +223,128 @@
             });
     });
 
+
+
+
+
+    var userDate1 = @Model.Auction.EndingTime.Value.Hour+":"+@Model.Auction.EndingTime.Value.Minute+":"+@Model.Auction.EndingTime.Value.Second; //MM-dd-YYYY || Mz
+
+
+
+    var userDate = @Model.Auction.EndingTime.Value.Month+"-" +@Model.Auction.EndingTime.Value.Day+"-" +@Model.Auction.EndingTime.Value.Year;
+    var date = new Date(userDate),
+        yr = date.getFullYear(),
+        month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+        day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
+        newDate = (yr + '-' + (parseInt(month) + 1) + '-' + day) + " " + userDate1; //YYYY-MM-dd TIME || Mz
+    // Set the date we're counting down to
+    //var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+    var countDownDate = new Date(newDate).getTime();
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+       // debugger;
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("demo11").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo11").innerHTML = "EXPIRED";
+            const button = document.getElementById('btnBidNow');
+
+            button.disabled = true;
+            alert("Button Disable")
+        }
+    }, 1000);
+
+
+
+
+
+
     
+
+    
+
+    @*//timercount
+
+    var EMinutes = @Model.Auction.EndingTime.Value.Minute;
+    var NMinutes = @System.DateTime.Now.Minute;
+    EMinutes = EMinutes - NMinutes
+    EMinutes = EMinutes * 60;
+
+    var EDay = @Model.Auction.EndingTime.Value.Day;
+    var NDay = @System.DateTime.Now.Day;
+    EDay = EDay - NDay
+    EDay = EDay * 24 * 60 * 60;
+        
+    var EHours = @Model.Auction.EndingTime.Value.Hour;
+    var NHours = @System.DateTime.Now.Hour;
+    EDay = EHours - NHours
+    EDay = EDay * 24 * 60 * 60;
+
+    var ESecond = @Model.Auction.EndingTime.Value.Second;
+    var NSecond = @System.DateTime.Now.Second;
+    ESecond = ESecond - NSecond
+    ESecond = ESecond + EDay + EMonth + EDay + EMinutes
+    if (EDay <= 0) {
+
+        document.getElementById("countdown1").innerHTML = EDay + " seconds remaining";
+
+    }
+
+
+
+
+    //var timeleft = ESecond;
+    ////var timeleft = 1000;
+    //var downloadTimer = setInterval(function () {
+    //    if (timeleft <= 0) {
+    //        clearInterval(downloadTimer);
+    //        document.getElementById("countdown1").innerHTML = "Finished";
+    //    } else {
+    //        document.getElementById("countdown1").innerHTML = timeleft + " seconds remaining";
+    //    }
+    //    timeleft -= 1;
+    //}, 1000);*@
+
+
+
+
+
+
+
+
+    //timer
+    
+    var timeleft = 10;
+    var downloadTimer = setInterval(function () {
+        if (timeleft <= 0) {
+            clearInterval(downloadTimer);
+            document.getElementById("countdown").innerHTML = "Finished";
+        } else {
+            document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+        }
+        timeleft -= 1;
+    }, 1000);
+
+
+
+
+
+
+
 </script>

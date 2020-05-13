@@ -1,0 +1,54 @@
+﻿@model DealDouble.Web.ViewModels.DashboardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Dashboard</h2>
+<br />
+<div class="row">
+    @if (User.IsInRole("Administrator"))
+    {
+        <div class="col-3">
+            <div class="card" style="width: 18rem;text-align:center">
+                <i class="fas fa-user-plus fa-7x"></i>
+                <div class="card-body">
+                    <h1>@Model.TotalUsers</h1>
+                    <h3 class="card-title text-center">User</h3>
+                    <a href="#" class="btn btn-primary">Add User</a>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="col-3">
+        <div class="card" style="width: 18rem;text-align:center">
+            <i class="fas fa-cart-arrow-down fa-7x"></i>
+            <div class="card-body">
+                <h1>@Model.TotalCategories</h1>
+                <h3 class="card-title text-center">Category</h3>
+                <a href="@Url.Action("Index","Category")" class="btn btn-primary">Add Category</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card" style="width: 18rem;text-align:center">
+            <i class="fas fa-cart-plus fa-7x"></i>
+            <div class="card-body">
+                <h1>@Model.TotalAuctions</h1>
+                <h3 class="card-title text-center">Auction</h3>
+                <a href="@Url.Action("Index","Auction")" class="btn btn-primary">Add Auction</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card" style="width: 18rem;text-align:center">
+            <i class="fas fa-cart-arrow-down fa-7x"></i>
+            <div class="card-body">
+                <h1>0</h1>
+                <h3 class="card-title text-center">Bid</h3>
+                <a href="#" class="btn btn-primary">Add Bid</a>
+            </div>
+        </div>
+    </div>
+</div>
+

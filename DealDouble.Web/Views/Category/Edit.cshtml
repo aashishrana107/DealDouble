@@ -27,6 +27,7 @@
 
 <script>
     $("#savebutton").click(function () {
+        debugger;
         $.ajax({
             url: @Url.Action("Edit","Category"),
             method: "post",
@@ -35,8 +36,7 @@
         })
             .done(function (response) {
                 debugger;
-                $("#listingArea").html(response);
-                $("#formModal").modal('toggle');
+                $("#contentArea").html(response);
             });
     });
 </script>

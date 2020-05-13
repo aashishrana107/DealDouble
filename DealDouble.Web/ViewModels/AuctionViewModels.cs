@@ -1,4 +1,6 @@
 ﻿using DealDouble.Entities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +9,20 @@ using System.Web;
 
 namespace DealDouble.Web.ViewModels
 {
+    public class UserRolesViewModel : PageViewModel
+    {
+        public List<IdentityRole> AvailableRoles { get; set; }
+        public List<IdentityRole> UserRoles { get; set; }
+        public DealDoubleUser user { get;  set; }
+    }
+
+    public class UserListingViewModel : PageViewModel
+    {
+        public List<DealDoubleUser> dealDoubleUsers { get; set; }
+        public List<string> Email { get; set; }
+        public List<IdentityRole> Roles { get; set; }
+    }
+
     public class AuctionListingViewModel:PageViewModel
     {
         public List<Auction> Auctions { get; set; }
@@ -21,7 +37,8 @@ namespace DealDouble.Web.ViewModels
     {
         public List<Auction> AllAuction { get; set; }
         public List<Auction> PromotedAuction { get; set; }
-
+        public Auction ImagesFirstAuction { get; set; }
+       
     }
 
     public class AuctionDetailViewModel : PageViewModel
@@ -32,6 +49,23 @@ namespace DealDouble.Web.ViewModels
         public List<Comment> Comments { get; set; }
         public int EntityID { get; set; }
     }
+
+    public class BidStatusViewModel : PageViewModel
+    {
+        public string Title { get; set; }
+        public int Bids { get; set; }
+        public string Bid { get; set; }
+        public int AuctionID { get; set; }
+        public virtual Auction Auction { get; set; }
+        public string UserID { get; set; }
+        public virtual DealDoubleUser User { get; set; }
+        public decimal BidAmount1 { get; set; }
+        public decimal BidAmount { get; set; }
+        public DateTime EndingTime { get; set; }
+        public DealDoubleUser LatestBidder { get; set; }
+        public string BidID { get; set; }
+    }
+
     public class CreateAuctionViewModel : PageViewModel
     {
         public int ID { get; set; }

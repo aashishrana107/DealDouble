@@ -16,6 +16,7 @@ namespace DealDouble.Web.Controllers
         {
             
             CategoryListingViewModel model = new CategoryListingViewModel();
+            model.Categories = categoriesService.GetAllCategories();
             model.PageTitle = "Categories";
             model.PageDescription = "Categories Listing Page";
             return View(model);
@@ -24,7 +25,7 @@ namespace DealDouble.Web.Controllers
         public ActionResult Listing()
         {
             CategoryListingViewModel model = new CategoryListingViewModel();
-            model.Categories = categoriesService.GetAllCategories();
+            
             return PartialView(model);
         }
 
@@ -43,7 +44,7 @@ namespace DealDouble.Web.Controllers
             
             category.Description = model.Description;
             categoriesService.SaveCategory(category);
-            return RedirectToAction("Listing");
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Edit(int ID)
@@ -69,21 +70,21 @@ namespace DealDouble.Web.Controllers
             category.Description = model.Description;
            
             categoriesService.UpdateCategory(category);
-            return RedirectToAction("Listing");
+            return RedirectToAction("Index");
 
         }
         [HttpGet]
         public ActionResult Delete(int ID)
         {
-            AuctionsService auctionsService = new AuctionsService();
-            var Auction = auctionsService.GetAuctionByID(ID);
-            return View(Auction);
+            
+            var category = categoriesService.GetCategoryByID(ID);
+            return PartialView(category);
         }
         [HttpPost]
         public ActionResult Delete(Category category)
         {
             categoriesService.DeleteCategory(category);
-            return RedirectToAction("Listing");
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Details(int ID)

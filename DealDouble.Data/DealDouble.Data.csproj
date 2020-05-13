@@ -100,6 +100,18 @@
     <Compile Include="Migrations\202004060638208_comment-Add-Rating.Designer.cs">
       <DependentUpon>202004060638208_comment-Add-Rating.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005070632092_AddRegisterFieldsintable.cs" />
+    <Compile Include="Migrations\202005070632092_AddRegisterFieldsintable.Designer.cs">
+      <DependentUpon>202005070632092_AddRegisterFieldsintable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005071117509_addfeedback.cs" />
+    <Compile Include="Migrations\202005071117509_addfeedback.Designer.cs">
+      <DependentUpon>202005071117509_addfeedback.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005071120166_addfeedback1.cs" />
+    <Compile Include="Migrations\202005071120166_addfeedback1.Designer.cs">
+      <DependentUpon>202005071120166_addfeedback1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,6 +158,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004060638208_comment-Add-Rating.resx">
       <DependentUpon>202004060638208_comment-Add-Rating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005070632092_AddRegisterFieldsintable.resx">
+      <DependentUpon>202005070632092_AddRegisterFieldsintable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005071117509_addfeedback.resx">
+      <DependentUpon>202005071117509_addfeedback.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005071120166_addfeedback1.resx">
+      <DependentUpon>202005071120166_addfeedback1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

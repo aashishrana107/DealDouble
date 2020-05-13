@@ -10,6 +10,7 @@ using System.Web.WebPages.Html;
 
 namespace DealDouble.Web.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class AuctionController : Controller
     {
         AuctionsService auctionsService = new AuctionsService();
@@ -31,7 +32,9 @@ namespace DealDouble.Web.Controllers
             }
             else
             {
+                //dasborad for change this 
                 return View(model);
+                //return PartialView(model);
             }
             
         }
@@ -164,6 +167,7 @@ namespace DealDouble.Web.Controllers
             var latestBidder = model.Auction.Bids.OrderByDescending(x => x.Timestamp).FirstOrDefault();
             model.LatestBidder = latestBidder != null ? latestBidder.User : null;
             model.Comments = SharedService.GetComments((int)EntityEnums.Auction, model.Auction.ID);
+           
             return View(model);
         }
     }

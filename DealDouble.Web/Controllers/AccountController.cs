@@ -153,10 +153,14 @@ namespace DealDouble.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new DealDoubleUser { UserName = model.Email, Email = model.Email };
+                var user = new DealDoubleUser { UserName = model.Username, Email = model.Email, Name = model.Name, city = model.city, address = model.address };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //assign the role
+                  //  await UserManager.AddToRoleAsync(user.Id, "Customer");
+
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

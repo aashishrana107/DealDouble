@@ -1,0 +1,10 @@
+﻿@model DealDouble.Entities.Category
+<h2>Are you sure want to delete?</h2>
+<form method="post" action="/Category/Delete/">
+    <input name="ID" value="@Model.ID" type="hidden" />
+    <button>Yes</button>
+    <br />
+</form>
+<form method="get" action="/Category/Index/">
+    <button>No</button>
+</form>

@@ -8,8 +8,16 @@ using System.Threading.Tasks;
 
 namespace DealDouble.Services
 {
+    
+
     public class AuctionsService
     {
+        public int GetAllNumberAuctions()
+        {
+            DealDoubleContext context = new DealDoubleContext();
+            return context.Auctions.Count();
+        }
+
         public List<Auction> GetAuction()
         {
             DealDoubleContext context = new DealDoubleContext();
@@ -37,6 +45,11 @@ namespace DealDouble.Services
         {
             DealDoubleContext context = new DealDoubleContext();
             return context.Auctions.Take(4).ToList();
+        }
+        public Auction GetFirstAuctionImage(int ID)
+        {
+            DealDoubleContext context = new DealDoubleContext();
+            return context.Auctions.Find(ID);
         }
         public Auction GetAuctionByID(int ID)
         {

@@ -1,4 +1,6 @@
-﻿<div class="row">
+﻿@model DealDouble.Web.ViewModels.CategoryListingViewModel
+
+<div class="row">
     <<div class="col-lg-12 m-2">
     <div class="float-left">
         <h2>Categories</h2>
@@ -6,49 +8,67 @@
     <div class="float-right">
         <button class="btn btn-success" id="createButton">Create New Category</button>
     </div>
-    <div id="listingArea">
-        @{Html.RenderAction("Listing");}
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Auctions
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model.Categories)
+            {
+                <tr>
+                    <td>
+                        @category.Name
+                    </td>
+                    <td>
+                        @category.Description
+                    </td>
+                    <td>
+                        @category.Auctions.Count()
+                    </td>
+                    <td>
+                        <button class="editButton btn btn-primary" data-id="@category.ID" data-toggle="modal" data-target="#formModal">Edit</button>
+                        <button class="deleteButton btn btn-danger" data-id="@category.ID" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="contentArea">
+
     </div>
-    <div class="modal fade" id="formModel" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" id="contentArea">
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="deleteModel" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete this record</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" id="mDeleteButton">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+  </div>
 </div>
 
 <script>
     $(".deleteButton").click(function () {
-        debugger;
+       
         $.ajax({
             url: "/Category/Delete/",
-            method: "post",
+            method: "get",
             data: {
-                ID: $(this).attr("data-recodID")
+                ID: $(this).attr("data-id")
             }
 
         })
             .done(function (response) {
-                debugger;
-                $("#listingArea").html(response);
-                $("#deleteModal").modal("toggle");
+                $("#contentArea").html(response);
             });
     });
 
@@ -57,15 +77,31 @@
     $("#createButton").click(function () {
         debugger;
         $.ajax({
-            url:  "/Category/Create/",
+            url: "/Category/Create/",
             method: "get"
         })
             .done(function (response) {
-                $("#formModal").modal('toggle');
                 $("#contentArea").html(response);
             });
 
     });
+
+    $(".editButton").click(function () {
+        $.ajax({
+            url: "/Category/Edit/",
+            method: "get",
+            data: {
+                ID: $(this).attr("data-id")
+            }
+
+        })
+            .done(function (response) {
+                debugger;
+                $("#contentArea").html(response);
+            })
+    });
+
+
 </script>
 
 

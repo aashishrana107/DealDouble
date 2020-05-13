@@ -17,6 +17,8 @@ namespace DealDouble.Web.Controllers
             vmodel.AllAuction = auctionsService.GetAuction();
             vmodel.PromotedAuction = auctionsService.GetpromotedAuctions();
 
+            vmodel.ImagesFirstAuction = auctionsService.GetFirstAuctionImage(10);
+
 
             vmodel.PageTitle = "Deal Double";
             vmodel.PageDescription = "This is Home Page";

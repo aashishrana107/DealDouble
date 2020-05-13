@@ -18,5 +18,8 @@ namespace DealDouble.Entities
             // Add custom user claims here
             return userIdentity;
         }
+        public string Name { get; set; }
+        public string address { get; set; }
+        public string city { get; set; }
     }
 }

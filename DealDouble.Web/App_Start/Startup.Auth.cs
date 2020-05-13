@@ -21,6 +21,7 @@ namespace DealDouble.Web
             app.CreatePerOwinContext(DealDoubleContext.Create);
             app.CreatePerOwinContext<DealDoubleUserManager>(DealDoubleUserManager.Create);
             app.CreatePerOwinContext<DealDoubleSignInManager>(DealDoubleSignInManager.Create);
+            app.CreatePerOwinContext<DealDoubleRoleManager>(DealDoubleRoleManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider

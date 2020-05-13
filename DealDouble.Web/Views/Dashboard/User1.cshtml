@@ -1,0 +1,49 @@
+﻿@model DealDouble.Web.ViewModels.UserListingViewModel
+@{
+    ViewBag.Title = "User1";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>User1</h2>
+
+
+<h2>Index</h2>
+@foreach (var item in Model.dealDoubleUsers)
+{
+    @item.Email
+}
+<h1>@Model.Email</h1>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th> User Name </th>
+            <th>Email</th>
+            <th>PhoneNumber </th>
+            <th> Roles </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.dealDoubleUsers)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Roles.Count</td>
+                <td>
+                    <a href="@Url.Action("UserRole","Dashboard", new { userID = @item.Id  })"> Assign Roles</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+    @foreach (var item in Model.Roles)
+    {
+        <p>@item.Name</p>
+    }
