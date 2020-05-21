@@ -21,6 +21,7 @@ using System.Data;
 
 namespace DealDouble.Web.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         CategoriesService categoriesService = new CategoriesService();

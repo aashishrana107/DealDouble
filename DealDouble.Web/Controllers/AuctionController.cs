@@ -10,7 +10,7 @@ using System.Web.WebPages.Html;
 
 namespace DealDouble.Web.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize]
     public class AuctionController : Controller
     {
         AuctionsService auctionsService = new AuctionsService();
@@ -153,6 +153,8 @@ namespace DealDouble.Web.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
+
+        [Authorize]
         public ActionResult Details(int ID)
         {
             AuctionDetailViewModel model = new AuctionDetailViewModel();

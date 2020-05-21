@@ -43,6 +43,7 @@ namespace DealDouble.Web.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult Deatils()
         {
             FeedbackService feedbackService = new FeedbackService();

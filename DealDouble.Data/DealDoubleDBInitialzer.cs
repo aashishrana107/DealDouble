@@ -24,7 +24,8 @@ namespace DealDouble.Data
         {
             List<IdentityRole> rolesInDealDouble = new List<IdentityRole>();
             rolesInDealDouble.Add(new IdentityRole() { Name = "Administrator" });
-            rolesInDealDouble.Add(new IdentityRole() { Name = "User" });
+            rolesInDealDouble.Add(new IdentityRole() { Name = "Vendor" });
+            rolesInDealDouble.Add(new IdentityRole() { Name = "Customer" });
 
             var rolesStore = new RoleStore<IdentityRole>(context);
             var rolesManager = new RoleManager<IdentityRole>(rolesStore);
@@ -55,7 +56,9 @@ namespace DealDouble.Data
                 {
                     //add neccessary roles to admin
                     usersManager.AddToRole(admin.Id, "Administrator");
-                    usersManager.AddToRole(admin.Id, "User");
+
+                    usersManager.AddToRole(admin.Id, "Vendor");
+                    usersManager.AddToRole(admin.Id, "Customer");
                 }
             }
 

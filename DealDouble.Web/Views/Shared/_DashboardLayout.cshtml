@@ -30,7 +30,7 @@
                 <a href="@Url.Action("User","Dashboard")" class="list-group-item list-group-item-action bg-light">Profile</a>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    if (User.IsInRole("Administrator") || User.IsInRole("Users"))
+                    if (User.IsInRole("Vendor"))
                     {
                         <a href="@Url.Action("Index", "Category")" class="list-group-item list-group-item-action bg-light">Category</a>
                         <a href="@Url.Action("Index", "Auction")" class="list-group-item list-group-item-action bg-light">Auction</a>

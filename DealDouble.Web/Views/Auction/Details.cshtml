@@ -51,7 +51,7 @@
                 <h3 class="card-title">@Model.Auction.Title</h3>
                 <h2 class="float-right" id="demo11"></h2>
                 <br />
-                <p class="float-right">End Bids Time @Model.Auction.EndingTime</p>
+                <p class="float-right">End Bids Time </p>
                 <h4>
                     $@Model.BidsAmount
                     @if (Model.LatestBidder != null)
@@ -124,8 +124,8 @@
             }
             else
             {
-                < p >< b > There is no comment </ b > </ p >
-                < hr />
+                <text>There are no Comment</text>
+                
             }
             <hr />
             @if (User.Identity.IsAuthenticated)

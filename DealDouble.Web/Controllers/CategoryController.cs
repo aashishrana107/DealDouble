@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DealDouble.Web.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         CategoriesService categoriesService = new CategoriesService();
